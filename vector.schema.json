@@ -1,0 +1,156 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "description": "Configuration file schema for the VectorCD application.",
+    "properties": {
+        "apps": {
+            "type": "array",
+            "description": "An array of application paths to be managed. Maximum 10 entries.",
+            "maxItems": 10,
+            "items": {
+                "type": "string"
+            }
+        },
+        "exclude": {
+            "type": "array",
+            "description": "A list of app names to exclude from the configuration.",
+            "items": {
+                "type": "string"
+            }
+        },
+        "maxMemory": {
+            "type": "integer",
+            "description": "Maximum memory allocation for the application (in MB). Must be at least 1 MB.",
+            "minimum": 1
+        },
+        "dashbaord": {
+            "type": "object",
+            "description": "Configuration for the application dashboard.",
+            "properties": {
+                "port": {
+                    "type": "integer",
+                    "description": "The port number on which the dashboard will run. Must be between 1 and 65535.",
+                    "minimum": 1,
+                    "maximum": 65535
+                },
+                "isSecurityEnabled": {
+                    "type": "boolean",
+                    "description": "Whether security features (like HTTPS) are enabled on the dashboard."
+                }
+            },
+            "required": ["port", "isSecurityEnabled"]
+        },
+        "staleTimeout": {
+            "type": "string",
+            "description": "Duration to mark a task or resource as stale. Supports units like seconds (s), minutes (m), hours (h), days (d), or weeks (w).",
+            "pattern": "^[0-9]+[smhdw]$"
+        },
+        "deployment": {
+            "type": "object",
+            "description": "Deployment-related configurations.",
+            "properties": {
+                "webhook": {
+                    "type": "array",
+                    "description": "An array of webhook URLs to trigger on deployment events.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "preScript": {
+                    "type": "string",
+                    "description": "Script to execute before the deployment process."
+                },
+                "postScript": {
+                    "type": "string",
+                    "description": "Script to execute after the deployment process."
+                }
+            }
+        },
+        "retryAttempts": {
+            "type": "integer",
+            "description": "Number of retry attempts if deployment fails. Must be 0 or greater.",
+            "minimum": 0
+        },
+        "notifications": {
+            "type": "object",
+            "description": "Notification settings for deployment events.",
+            "properties": {
+                "slackWebhookUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Webhook URL for Slack notifications."
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Email address to send deployment notifications."
+                }
+            },
+            "required": ["slackWebhookUrl", "email"]
+        },
+        "rollbackOnFailure": {
+            "type": "boolean",
+            "description": "Whether to automatically roll back the deployment if it fails."
+        },
+        "healthCheck": {
+            "type": "object",
+            "description": "Configuration for health checks of the application.",
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "URL to perform health checks."
+                },
+                "timeout": {
+                    "type": "integer",
+                    "description": "Timeout in seconds for the health check response.",
+                    "minimum": 1
+                }
+            },
+            "required": ["url", "timeout"]
+        },
+        "log": {
+            "type": "object",
+            "description": "Logging configuration.",
+            "properties": {
+                "logLevel": {
+                    "type": "string",
+                    "enum": ["info", "warn", "error", "debug"],
+                    "description": "Logging level. Supported values are 'info', 'warn', 'error', and 'debug'."
+                },
+                "location": {
+                    "type": "string",
+                    "description": "File path for log storage."
+                }
+            },
+            "required": ["logLevel", "location"]
+        },
+        "autoScale": {
+            "type": "object",
+            "description": "Auto-scaling configuration for the application.",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable auto-scaling."
+                },
+                "minInstances": {
+                    "type": "integer",
+                    "description": "Minimum number of instances to maintain.",
+                    "minimum": 1
+                },
+                "maxInstances": {
+                    "type": "integer",
+                    "description": "Maximum number of instances allowed.",
+                    "minimum": 1
+                },
+                "cpuThreshold": {
+                    "type": "integer",
+                    "description": "CPU usage percentage threshold to trigger auto-scaling. Must be between 1 and 100.",
+                    "minimum": 1,
+                    "maximum": 100
+                }
+            },
+            "required": ["enabled", "minInstances", "maxInstances", "cpuThreshold"]
+        }
+    },
+    "required": ["apps", "maxMemory", "dashbaord", "staleTimeout", "retryAttempts", "notifications", "rollbackOnFailure", "healthCheck", "log", "autoScale"]
+}
