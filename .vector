@@ -1,0 +1,39 @@
+{
+    "apps": [],
+    "exclude": [
+        "frontend1"
+    ],
+    "maxMemory": 2048,
+    "dashbaord": {
+        "port": 8000,
+        "isSecurityEnabled": false
+    },
+    "staleTimeout": "2w",
+    "deployment": {
+        "webhook": [
+            ""
+        ],
+        "preScript": "./scripts/pre-deploy.sh",
+        "postScript": ""
+    },
+    "retryAttempts": 3,
+    "notifications": {
+        "slackWebhookUrl": "https://hooks.slack.com/services/...",
+        "email": "devops@abcrrssas.com"
+    },
+    "rollbackOnFailure": true,
+    "healthCheck": {
+        "url": "/health",
+        "timeout": 30
+    },
+    "log": {
+        "logLevel": "info",
+        "location": "/var/vector/{.vector.err,.vector.info}"
+    },
+    "autoScale": {
+        "enabled": true,
+        "minInstances": 1,
+        "maxInstances": 5,
+        "cpuThreshold": 80
+    }
+}
