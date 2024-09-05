@@ -1,0 +1,21 @@
+{
+  "name": "vectorcd",
+  "version": "0.0.1",
+  "description": "An Open Source Continuous Deployment DevOPS Tool",
+  "scripts": {
+    "postinstall": "node .setup.js"
+  },
+  "keywords": [
+    "DevOps",
+    "Continuous Deployment",
+    "CD",
+    "CI",
+    "Continuous Integration"
+  ],
+  "author": "Siddhant",
+  "license": "ISC",
+  "dependencies": {
+    "generator-code": "^1.11.1",
+    "yo": "^5.0.0"
+  }
+}

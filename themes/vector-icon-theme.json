@@ -1,0 +1,18 @@
+{
+    "iconDefinitions": {
+      "_vector": {
+        "iconPath": "./resources/logo.svg"
+      }
+    },
+    "fileExtensions": {
+      "vector": "_vector"
+    },
+    "folderNames": {},
+    "folderNamesExpanded": {},
+    "fileNames": {},
+    "languageIds": {
+      "json": "_vector"
+    },
+    "showLanguageModeIcons": true,
+  }
+  
